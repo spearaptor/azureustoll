@@ -41,7 +41,7 @@ contract TollTax is Ownable{
     
     struct FormDataType {
         address ethAddress;
-        bytes32 accountdataHash;
+        bytes32 formdataHash;
         FormStates status;
     }
     
@@ -60,6 +60,8 @@ contract TollTax is Ownable{
     mapping(address=>TollInformationType) public tollInformation;
     
     mapping(bytes32 => FormDataType) private submittedForms;
+    
+    mapping(address => bytes32) private ethAddressToUuidHash; 
     
     //check what is oracle
     
@@ -184,6 +186,8 @@ contract TollTax is Ownable{
     public
     onlyExistingUser(from)
     {
+        require(submittedForms[ethAddressToUuidHash[from]].status == FormStates.approved, "User account not approved");
+        
         ERC20Mintable erc = ERC20Mintable(assetContract);
         bool success = erc.transferFrom(from, to, amount);
         require(success, 'Transaction Failed');
@@ -205,6 +209,7 @@ contract TollTax is Ownable{
     public
     onlyExistingToll(ethAddress) {
         submittedForms[uuidHash] = FormDataType(ethAddress, formdataHash, FormStates.submitted);
+        ethAddressToUuidHash[ethAddress] = uuidHash;
         emit NewTollAccount(uuidHash, ethAddress, formdataHash);
     }
     
