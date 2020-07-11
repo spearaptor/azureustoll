@@ -77,8 +77,11 @@ contract TollTax is Ownable{
     event TollFormApproved(bytes32 uuidHash, address indexed ethAddress);
     event TollFormRejected(bytes32 uuidHash, address indexed ethAddress);
     
-    constructor() public {
-
+    address public assetContract;
+    
+    constructor(address _assetContract) public {
+        require(_assetContract != address(0));
+        assetContract = _assetContract;
     }
     
     modifier onlyExistingUser(address ethAddress) {
