@@ -155,6 +155,7 @@ contract TollTax is Ownable{
     public
     onlyExistingUser(ethAddress) {
         submittedForms[uuidHash] = FormDataType(ethAddress, formdataHash, FormStates.submitted);
+        ethAddressToUuidHash[ethAddress] = uuidHash;
         emit NewUserAccount(uuidHash, ethAddress, formdataHash);
     }
     
