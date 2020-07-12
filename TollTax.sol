@@ -85,7 +85,7 @@ contract TollTax is Ownable{
     }
     
     modifier onlyExistingUser(address ethAddress) {
-        if(!userExists[ethAddress]){
+        if(userExists[ethAddress] == false){
             revert('User does not exist.');
         }
         else if (userExists[ethAddress] && (userInformation[ethAddress].status != UserStates.verified)){
@@ -94,7 +94,7 @@ contract TollTax is Ownable{
         _;
     }
     modifier onlyExistingToll(address ethAddress) {
-        if(!tollExists[ethAddress]){
+        if(tollExists[ethAddress] == false){
             revert('Toll does not exist.');
         }
         else if (tollExists[ethAddress] && (tollInformation[ethAddress].status != TollStates.authorised)){
@@ -149,6 +149,7 @@ contract TollTax is Ownable{
     public
     onlyNewUser(ethAddress)
     {
+        userExists[ethAddress] = true;
         userInformation[ethAddress] = UserInformationType(emailHash, userInfoHash, UserStates.verified);
         emit UserStatusUpdated(ethAddress, UserStates.verified);
 
@@ -191,6 +192,7 @@ contract TollTax is Ownable{
     onlyExistingUser(from)
     {
         require(submittedForms[ethAddressToUuidHash[from]].status == FormStates.approved, "User account not approved");
+        require(submittedForms[ethAddressToUuidHash[to]].status == FormStates.approved, "Toll account not approved");
         
         ERC20Mintable erc = ERC20Mintable(assetContract);
         bool success = erc.transferFrom(from, to, amount);
@@ -205,6 +207,7 @@ contract TollTax is Ownable{
     public
     onlyNewToll(ethAddress)
     {
+        tollExists[ethAddress] = true;
         tollInformation[ethAddress] = TollInformationType(emailHash, tollInfoHash,  TollStates.authorised);
         emit TollStatusUpdated(ethAddress, TollStates.authorised);
 
