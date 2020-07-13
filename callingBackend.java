@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("X-API-KEY", "e8367c8a-f293-479c-af0e-c81facab7684");
+                params.put("X-API-KEY", "");
                 return params;
             }
 
