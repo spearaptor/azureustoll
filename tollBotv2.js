@@ -23,6 +23,12 @@ var gotEvent;
 
 const licenseId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2) + Math.floor(Math.pow(10,12) + Math.random() * 9 * Math.pow(10,11));
 const userInfoHash = '0x'+createKeccakHash('keccak256').update(licenseId).digest('hex');
+let toll = {
+    car: 20,
+    bike: 10,
+    truck: 40,
+    govt: 0
+}
 const tollId = String(Math.floor(Math.pow(10,0) + Math.random() * 9 * Math.pow(10,2)));
 const tollInfoHash = '0x'+createKeccakHash('keccak256').update(tollId).digest('hex');
 // const userInfoHash = '0x92b41f7f7f961424eac187cf4fc7f1753ea9ff83d331d6d4ba7c3fd0a21aa64b';
