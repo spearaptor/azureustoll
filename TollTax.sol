@@ -15,7 +15,7 @@ contract Ownable {
     }
 }
 
-contract TollTax is Ownable, ERC20{
+contract TollTax is Ownable{
     
     struct UserInformationType {
         bytes32 emailHash;
@@ -79,7 +79,7 @@ contract TollTax is Ownable, ERC20{
     
     address public assetContract;
     
-    constructor(address _assetContract) public ERC20(_name, _symbol, _decimals){
+    constructor(address _assetContract) public {
         require(_assetContract != address(0));
         assetContract = _assetContract;
     }
@@ -155,12 +155,6 @@ contract TollTax is Ownable, ERC20{
 
     }
     
-    function mint(address account, uint256 amount) public onlyOwner returns (bool) {
-        _mint(account, amount);
-        return true;
-    }
-    
-    
     function submitUserFormData(bytes32 uuidHash, address ethAddress, bytes32 formdataHash)
     public
     onlyExistingUser(ethAddress) {
@@ -190,6 +184,7 @@ contract TollTax is Ownable, ERC20{
     onlyExistingUser(ethAddress)
     {
         userExists[ethAddress] = false;
+        userInformation[ethAddress].status = UserStates.unverified;
         emit UserStatusUpdated(ethAddress, UserStates.unverified);
     }
     
@@ -245,6 +240,7 @@ contract TollTax is Ownable, ERC20{
     onlyExistingToll(ethAddress)
     {
         tollExists[ethAddress] = false;
+        tollInformation[ethAddress].status = TollStates.unauthorised;
         emit TollStatusUpdated(ethAddress, TollStates.unauthorised);
     }
     
