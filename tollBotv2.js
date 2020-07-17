@@ -3,7 +3,10 @@ const axios = require('axios');
 const WebSocket = require('ws');
 const config = require('./config.js');
 const util = require('ethjs-util');
+const sha3 = require('js-sha3');
+const privateToAccount = require('ethjs-account').privateToAccount;
 const createKeccakHash = require('keccak');
+const chabi = 'kab00t4r';
 
 // Config Checks
 if (!config.apiKey || !config.contractAddress || !config.auditContractAddress){
@@ -14,10 +17,9 @@ if (!config.apiKey || !config.contractAddress || !config.auditContractAddress){
 // Declarations
 var myArgs = process.argv.slice(2);
 var gotEvent;
-const userAddress = myArgs[0];
-const tollAddress = myArgs[1];
-const depositAmount = myArgs[2];
-const transferAmount = myArgs[3];
+// const userAddress = myArgs[0];
+// const tollAddress = myArgs[1];
+
 
 const licenseId = Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 2) + Math.floor(Math.pow(10,12) + Math.random() * 9 * Math.pow(10,11));
 const userInfoHash = '0x'+createKeccakHash('keccak256').update(licenseId).digest('hex');
@@ -26,8 +28,14 @@ const tollInfoHash = '0x'+createKeccakHash('keccak256').update(tollId).digest('h
 // const userInfoHash = '0x92b41f7f7f961424eac187cf4fc7f1753ea9ff83d331d6d4ba7c3fd0a21aa64b';
 // const tollInfoHash = '0xcb3f839a125560517ec017f2d36899e53a5346762c5f7bbdecea0b1a131d634c';
 
-const useremailHash = '0x'+createKeccakHash('keccak256').update(myArgs[4]).digest('hex');
-const tollemailHash = '0x'+createKeccakHash('keccak256').update(myArgs[5]).digest('hex');
+const useremailHash = '0x'+createKeccakHash('keccak256').update(myArgs[0]).digest('hex');
+const tollemailHash = '0x'+createKeccakHash('keccak256').update(myArgs[1]).digest('hex');
+const depositAmount = myArgs[2];
+const transferAmount = myArgs[3];
+
+const userAddress = privateToAccount(sha3.keccak256(chabi+useremailHash)).address.toLowerCase();
+const tollAddress = privateToAccount(sha3.keccak256(chabi+tollemailHash)).address.toLowerCase();
+
 // const useremailHash = '0x860bf3a1a0662879758e99723326f220355ce1b4a633213b2bc1cd5c1a35c323';
 // const tollemailHash = '0x3479f4c9aad67a9fe5e2cc84cb09894262b934e2d68e09d2b01f50ad1d188ed8';
 const userFormdataHash = '0x3d1feaf0ab633596300e5042b40aadf5e0e078d8de3821bd4c4b93de6154d71f';
@@ -102,12 +110,12 @@ ws.on('message', function incoming(data){
                         // Approving tokens for User
                         tokenInstance.post('/approve', {
                             spender: userAddress,
-                            value: transferAmount
+                            value: depositAmount
                         })
                         .then(function (response) {
                             console.log(response.data);
                             if (response.data.success){
-                                console.log(transferAmount+' tokens allowed to user to pay toll');
+                                console.log(depositAmount+' tokens allowed to user to pay toll');
                                 // Submit Form for User
                                 tokenInstance.post('/submitUserFormData', {
                                     uuidHash: uuidHash,
@@ -287,35 +295,39 @@ ws.on('message', function incoming(data){
                 process.exit(0);
             });
 
-            if (userflag==true && tollflag==true){
-            // Paying toll plaza from user 
-            tokenInstance.post('/payTollTax', {
-                from: userAddress,
-                to: tollAddress,
-                amount: depositAmount
-            })
-            .then(function (response) {
-                console.log(response.data);
-                if (response.data.success){
-                    console.log('Toll tax of '+transferAmount+' paid');
+/*            setInterval(function(){
+                if (userflag==true && tollflag==true){
+                    // Paying toll plaza from user 
+                    console.log(userflag, tollflag);
+                    tokenInstance.post('/payTollTax', {
+                        from: userAddress,
+                        to: tollAddress,
+                        amount: transferAmount
+                    })
+                    .then(function (response) {
+                        console.log(response.data);
+                        if (response.data.success){
+                            console.log('Toll tax of '+transferAmount+' paid');
+                        }
+                    })
+                    .catch(function (error) {
+                        if (error.response.data){
+                            console.log(error.response.data);
+                            if (error.response.data.error == 'unknown contract'){
+                                console.error('You filled in the wrong contract address!');
+                            }
+                            if (error.response.data.error == 'Transaction execution will fail with supplied arguments'){
+                                console.error('Payment failed');
+                            }
+                        } else {
+                            console.log(error.response);
+                        }
+                        process.exit(0);
+                    });
                 }
-            })
-            .catch(function (error) {
-                if (error.response.data){
-                    console.log(error.response.data);
-                    if (error.response.data.error == 'unknown contract'){
-                        console.error('You filled in the wrong contract address!');
-                    }
-                    if (error.response.data.error == 'Transaction execution will fail with supplied arguments'){
-                        console.error('Payment failed');
-                    }
-                } else {
-                    console.log(error.response);
-                }
-                process.exit(0);
-            });
-        }
-/*      
+                }, 3000);
+
+      
     // Generating Audit log
     if (data.type == 'event' && data.event_name == 'Transfer'){
         gotEvent = true;
