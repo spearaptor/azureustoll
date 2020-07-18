@@ -30,28 +30,19 @@ contract TollTax is Ownable{
     }
     
     enum UserStates {
-        unverified,
-        verified
+        notApplied,
+        pending,
+        verified,
+        rejected
     }
     
     enum TollStates {
-        unauthorised,
-        authorised
-    }
-    
-    struct FormDataType {
-        address ethAddress;
-        bytes32 formdataHash;
-        FormStates status;
-    }
-    
-    enum FormStates {
-        submitted,
-        inReview,
-        onHold,
-        approved,
+        notApplied,
+        pending,
+        authorised,
         rejected
     }
+    
     
     mapping(address => bool) public userExists;
     mapping(address => bool) public tollExists;
@@ -59,23 +50,26 @@ contract TollTax is Ownable{
     mapping(address=>UserInformationType) public userInformation;
     mapping(address=>TollInformationType) public tollInformation;
     
-    mapping(bytes32 => FormDataType) private submittedForms;
+    // mapping(bytes32 => FormDataType) private submittedForms;
     
-    mapping(address => bytes32) private ethAddressToUuidHash; 
+    // mapping(address => bytes32) private ethAddressToUuidHash; 
     
     //check what is oracle
     
     event UserStatusUpdated(address ethAddress, UserStates status);
     event TollStatusUpdated(address ethAddress,TollStates status);
     
-    event NewUserAccount(bytes32 uuidHash, address indexed ethAddress, bytes32 accountdataHash);
-    event NewTollAccount(bytes32 uuidHash, address indexed ethAddress, bytes32 accountdataHash);
+    event TransferSuccess(address from, address to, uint256 amount);
+    event TransferFaliure(address from, address to, uint256 amount);
     
-    event UserFormApproved(bytes32 uuidHash, address indexed ethAddress);
-    event UserFormRejected(bytes32 uuidHash, address indexed ethAddress);
+    // event NewUserAccount(bytes32 uuidHash, address indexed ethAddress, bytes32 accountdataHash);
+    // event NewTollAccount(bytes32 uuidHash, address indexed ethAddress, bytes32 accountdataHash);
     
-    event TollFormApproved(bytes32 uuidHash, address indexed ethAddress);
-    event TollFormRejected(bytes32 uuidHash, address indexed ethAddress);
+    // event UserFormApproved(bytes32 uuidHash, address indexed ethAddress);
+    // event UserFormRejected(bytes32 uuidHash, address indexed ethAddress);
+    
+    // event TollFormApproved(bytes32 uuidHash, address indexed ethAddress);
+    // event TollFormRejected(bytes32 uuidHash, address indexed ethAddress);
     
     address public assetContract;
     
@@ -84,7 +78,7 @@ contract TollTax is Ownable{
         assetContract = _assetContract;
     }
     
-    modifier onlyExistingUser(address ethAddress) {
+    modifier onlyFullyApprovedUser(address ethAddress) {
         if(userExists[ethAddress] == false){
             revert('User does not exist.');
         }
@@ -93,7 +87,7 @@ contract TollTax is Ownable{
         }
         _;
     }
-    modifier onlyExistingToll(address ethAddress) {
+    modifier onlyFullyApprovedToll(address ethAddress) {
         if(tollExists[ethAddress] == false){
             revert('Toll does not exist.');
         }
@@ -103,46 +97,37 @@ contract TollTax is Ownable{
         _;
     }
     
+    modifier onlyPartiallyApprovedUser(address ethAddress){
+        if(userExists[ethAddress] == false){
+            revert('User does not exist.');
+        }
+        _;
+    }
+    
+    modifier onlyPartiallyApprovedToll(address ethAddress){
+        if(tollExists[ethAddress] == false){
+            revert('Toll does not exist.');
+        }
+        _;
+    }
+    
     modifier onlyNewUser(address ethAddress) {
-        if (userExists[ethAddress] || userInformation[ethAddress].status != UserStates.unverified)
-            revert('User exists.');
+        if (userExists[ethAddress] || userInformation[ethAddress].status == UserStates.verified)
+            revert('User account exists.');
         _;
     }
     modifier onlyNewToll(address ethAddress) {
-        if (tollExists[ethAddress] || tollInformation[ethAddress].status != TollStates.unauthorised)
-            revert('User exists.');
+        if (tollExists[ethAddress] || tollInformation[ethAddress].status == TollStates.authorised)
+            revert('Toll account exists.');
         _;
     }
     
     
-    function getFormStatus(bytes32 uuidHash) public view returns (int8 status) {
-        FormDataType memory fd = submittedForms[uuidHash];
-        if (fd.ethAddress == address(0))
+    function getUserStatus(address ethAddress) public view returns (int8 status) {
+        if (ethAddress == address(0))
             return -1;
         else
-            return int8(fd.status);
-    }
-    function getFormStateIdentifierByCode(int8 statusCode)
-    public pure returns(string memory statusIdentifier) {
-        require(statusCode <= 4);
-        if (statusCode < 0)
-            return "notSubmittedOnContract";
-        if (statusCode == int8(FormStates.submitted)) return "submitted";
-        if (statusCode == int8(FormStates.inReview)) return "inReview";
-        if (statusCode == int8(FormStates.onHold)) return "onHold";
-        if (statusCode == int8(FormStates.approved)) return "approved";
-        if (statusCode == int8(FormStates.rejected)) return "rejected";
-    }
-
-    function getFormStatusCodeByIdentifier(string memory statusIdentifier)
-    public pure returns(int8 statusCode) {
-        bytes32 identifierHash = keccak256(bytes(statusIdentifier));
-        if (identifierHash == keccak256("notSubmittedOnContract")) return -1;
-        if (identifierHash == keccak256("submitted")) return int8(FormStates.submitted);
-        if (identifierHash == keccak256("inReview")) return int8(FormStates.inReview);
-        if (identifierHash == keccak256("onHold")) return int8(FormStates.onHold);
-        if (identifierHash == keccak256("approved")) return int8(FormStates.approved);
-        if (identifierHash == keccak256("rejected")) return int8(FormStates.rejected);
+            return int8(userInformation[ethAddress].status);
     }
     
     function addUserByEmail(address ethAddress, bytes32 emailHash, bytes32 userInfoHash)
@@ -150,98 +135,90 @@ contract TollTax is Ownable{
     onlyNewUser(ethAddress)
     {
         userExists[ethAddress] = true;
-        userInformation[ethAddress] = UserInformationType(emailHash, userInfoHash, UserStates.verified);
+        userInformation[ethAddress] = UserInformationType(emailHash, userInfoHash, UserStates.pending);
+        emit UserStatusUpdated(ethAddress, UserStates.pending);
+    }
+    
+    function approveUser(address ethAddress)
+    public
+    onlyOwner {
+        userInformation[ethAddress].status = UserStates.verified;
         emit UserStatusUpdated(ethAddress, UserStates.verified);
-
     }
     
-    function submitUserFormData(bytes32 uuidHash, address ethAddress, bytes32 formdataHash)
-    public
-    onlyExistingUser(ethAddress) {
-        submittedForms[uuidHash] = FormDataType(ethAddress, formdataHash, FormStates.submitted);
-        ethAddressToUuidHash[ethAddress] = uuidHash;
-        emit NewUserAccount(uuidHash, ethAddress, formdataHash);
-    }
-    
-    function approveUserForm(bytes32 uuidHash)
+    function rejectUser(address ethAddress)
     public
     onlyOwner {
-        submittedForms[uuidHash].status = FormStates.approved;
-        address u_addr = submittedForms[uuidHash].ethAddress;
-        emit UserFormApproved(uuidHash, u_addr);
-    }
-    
-    function rejectUserForm(bytes32 uuidHash)
-    public
-    onlyOwner {
-        submittedForms[uuidHash].status = FormStates.rejected;
-        address u_addr = submittedForms[uuidHash].ethAddress;
-        emit UserFormRejected(uuidHash, u_addr);
+        userInformation[ethAddress].status = UserStates.rejected;
+        emit UserStatusUpdated(ethAddress, UserStates.rejected);
     }
     
     function revokeUser(address ethAddress)
     public
-    onlyExistingUser(ethAddress)
+    onlyPartiallyApprovedUser(ethAddress)
     {
         userExists[ethAddress] = false;
-        userInformation[ethAddress].status = UserStates.unverified;
-        emit UserStatusUpdated(ethAddress, UserStates.unverified);
+        userInformation[ethAddress].status = UserStates.notApplied;
+        emit UserStatusUpdated(ethAddress, UserStates.notApplied);
     }
     
     function payTollTax(address from, address to, uint256 amount)
     public
-    onlyExistingUser(from)
+    onlyFullyApprovedUser(from)
+    onlyFullyApprovedToll(to)
     {
-        require(submittedForms[ethAddressToUuidHash[from]].status == FormStates.approved, "User account not approved");
-        require(submittedForms[ethAddressToUuidHash[to]].status == FormStates.approved, "Toll account not approved");
-        
         ERC20Mintable erc = ERC20Mintable(assetContract);
         bool success = erc.transferFrom(from, to, amount);
-        require(success, 'Transaction Failed');
+        if(success){
+            emit TransferSuccess(from, to, amount);
+        }
+        else{
+            emit TransferFaliure(from, to, amount);
+        }
 
     }
     
     
+    //TOLL PART
     
+    
+    function getTollStatus(address ethAddress) public view returns (int8 status) {
+        if (ethAddress == address(0))
+            return -1;
+        else
+            return int8(tollInformation[ethAddress].status);
+    }
     
     function addTollByEmail(address ethAddress, bytes32 emailHash, bytes32 tollInfoHash)
     public
     onlyNewToll(ethAddress)
     {
         tollExists[ethAddress] = true;
-        tollInformation[ethAddress] = TollInformationType(emailHash, tollInfoHash,  TollStates.authorised);
-        emit TollStatusUpdated(ethAddress, TollStates.authorised);
-
-    }
-    function submitTollFormData(bytes32 uuidHash, address ethAddress, bytes32 formdataHash)
-    public
-    onlyExistingToll(ethAddress) {
-        submittedForms[uuidHash] = FormDataType(ethAddress, formdataHash, FormStates.submitted);
-        ethAddressToUuidHash[ethAddress] = uuidHash;
-        emit NewTollAccount(uuidHash, ethAddress, formdataHash);
+        tollInformation[ethAddress] = TollInformationType(emailHash, tollInfoHash,  TollStates.pending);
+        emit TollStatusUpdated(ethAddress, TollStates.pending);
     }
     
-    function approveTollForm(bytes32 uuidHash)
+    function approveToll(address ethAddress)
     public
     onlyOwner {
-        submittedForms[uuidHash].status = FormStates.approved;
-        address u_addr = submittedForms[uuidHash].ethAddress;
-        emit TollFormApproved(uuidHash, u_addr);
+        tollInformation[ethAddress].status = TollStates.authorised;
+        emit TollStatusUpdated(ethAddress, TollStates.authorised);
     }
-    function rejectTollForm(bytes32 uuidHash)
+    
+    function rejectToll(address ethAddress)
     public
     onlyOwner {
-        submittedForms[uuidHash].status = FormStates.rejected;
-        address u_addr = submittedForms[uuidHash].ethAddress;
-        emit TollFormRejected(uuidHash, u_addr);
+        tollInformation[ethAddress].status = TollStates.rejected;
+        emit TollStatusUpdated(ethAddress, TollStates.rejected);
     }
+    
     function revokeToll(address ethAddress)
     public
-    onlyExistingToll(ethAddress)
+    onlyPartiallyApprovedToll(ethAddress)
     {
         tollExists[ethAddress] = false;
-        tollInformation[ethAddress].status = TollStates.unauthorised;
-        emit TollStatusUpdated(ethAddress, TollStates.unauthorised);
+        tollInformation[ethAddress].status = TollStates.notApplied;
+        emit TollStatusUpdated(ethAddress, TollStates.notApplied);
     }
     
     
