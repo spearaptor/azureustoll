@@ -116,7 +116,26 @@ exports.revoke_toll = function(req, res) {
     })
 }
 
-
+//mint for user
+exports.mint = function(req, res) {
+    const userEthaddress = req.body.ethAddress;
+    const mintAmount = req.body.amount;
+    erc20Mintable.post('/mint', {
+        account: userEthaddress,
+        amount: mintAmount
+    })
+    .then(function (response) {
+        const data = response.data;
+        console.log(data);
+        res.send(data)
+    })
+    .catch(function (error) {
+        console.log("ERRROR STARTS HERE::\n",error.response.data);
+        console.log("\nERROR ENDS HERE")
+        res.status(error.response.status);
+        res.send(error.response.data)
+    })
+}
 
 // Check user balance in ERC20Mintable
 exports.balanceOf = function(req, res) {
