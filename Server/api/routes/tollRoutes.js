@@ -5,9 +5,15 @@ module.exports = function(app) {
   // TOLL Tax Contract Routes
   app.route('/toll/createUser')
     .post(tollUsers.create_user);
+  
+  app.route('/toll/createToll')
+    .post(tollUsers.create_toll);
 
   app.route('/toll/revokeUser')
     .post(tollUsers.revoke_user);
+  
+  app.route('/toll/revokeToll')
+    .post(tollUsers.revoke_toll);
 
   // ERC20Mintable contract Routes
   app.route('/erc20/balanceOf')
