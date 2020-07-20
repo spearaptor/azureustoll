@@ -47,6 +47,31 @@ exports.create_user = function(req, res) {
 
 }
 
+// Create Toll By Email
+exports.create_toll = function(req, res) {
+    const tollEthaddress = createEthaddress(req.body.emailAddress);
+    const tollEmailHash = createHashes(req.body.emailAddress);
+    const tollInforHash = tollInfoHashes(req.body.documentId, req.body.tollPricing);
+        tokenInstance.post('/addTollByEmail', {
+            ethAddress: tollEthaddress,
+            emailHash: tollEmailHash,
+            tollInfoHash: tollInforHash
+        })
+        .then(function (response) {
+            const data = response.data;
+            data["ethAddress"] = tollEthaddress;
+            console.log("RESPONSE FROM API", data);
+            res.send(data);
+        })
+        .catch(function (error) {
+            console.log("ERRROR STARTS HERE::\n",error.response.data);
+            console.log("\nERROR ENDS HERE")
+            res.status(error.response.status);
+            res.send(error.response.data)
+        })
+    }
+
+
 //REVOKE USER Account
 exports.revoke_user = function(req, res) {
     const userEthaddress = req.body.ethAddress;
@@ -68,6 +93,29 @@ exports.revoke_user = function(req, res) {
         res.send(error.response.data)
     })
 }
+
+//REVOKE toll Account
+exports.revoke_toll = function(req, res) {
+    const tollEthaddress = req.body.ethAddress;
+    tokenInstance.post('/revokeToll', {
+        ethAddress  : tollEthaddress
+    })
+    .then(function (response) {
+        const data = response.data;
+        console.log(data);
+        // if (data.success){
+        //     console.log('User '+ ethaddress+' By Email added');
+        // }
+        res.send(data)
+    })
+    .catch(function (error) {
+        console.log("ERRROR STARTS HERE::\n",error.response.data);
+        console.log("\nERROR ENDS HERE")
+        res.status(error.response.status);
+        res.send(error.response.data)
+    })
+}
+
 
 
 // Check user balance in ERC20Mintable
