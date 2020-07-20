@@ -12,6 +12,9 @@ module.exports = function(app) {
   app.route('/toll/revokeUser')
     .post(tollUsers.revoke_user);
   
+  app.route('/toll/mint')
+    .post(tollUsers.mint);
+  
   app.route('/toll/revokeToll')
     .post(tollUsers.revoke_toll);
 
