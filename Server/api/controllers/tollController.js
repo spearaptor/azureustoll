@@ -120,7 +120,7 @@ exports.revoke_toll = function(req, res) {
 exports.mint = function(req, res) {
     const userEthaddress = req.body.ethAddress;
     const mintAmount = req.body.amount;
-    erc20Mintable.post('/mint', {
+    tokenInstance.post('/mint', {
         account: userEthaddress,
         amount: mintAmount
     })
@@ -154,3 +154,27 @@ exports.balanceOf = function(req, res) {
         res.send(error)
     })
 }
+
+// Paying toll tax
+exports.pay_toll = function(req, res) {
+    const userEthaddress = createEthaddress(req.body.UseremailAddress);
+    const tollEthaddress = createEthaddress(req.body.TollemailAddress);
+    const transferAmount = req.body.amount;
+        tokenInstance.post('/payTollTax', {
+            from: userEthaddress,
+            to: tollEthaddress,
+            amount: transferAmount
+        })
+        .then(function (response) {
+            const data = response.data;
+            console.log("RESPONSE FROM API", data);
+            res.send(data);
+        })
+        .catch(function (error) {
+            console.log("ERRROR STARTS HERE::\n",error.response.data);
+            console.log("\nERROR ENDS HERE");
+            res.status(error.response.status);
+            res.send(error.response.data)
+        })
+    }
+
