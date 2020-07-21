@@ -42,7 +42,9 @@ contract TollTax is Ownable{
         authorised,
         rejected
     }
-    
+    using SafeMath for uint256;
+    uint256 private _totalSupply;
+    mapping (address => uint256) private _balances;
     
     mapping(address => bool) public userExists;
     mapping(address => bool) public tollExists;
@@ -55,6 +57,7 @@ contract TollTax is Ownable{
     // mapping(address => bytes32) private ethAddressToUuidHash; 
     
     //check what is oracle
+    event Transfer(address indexed from, address indexed to, uint256 value);
     
     event UserStatusUpdated(address ethAddress, UserStates status);
     event TollStatusUpdated(address ethAddress,TollStates status);
@@ -162,19 +165,29 @@ contract TollTax is Ownable{
         emit UserStatusUpdated(ethAddress, UserStates.notApplied);
     }
     
+    function mint(address account, uint256 amount) public onlyOwner {
+        require(account != address(0), "ERC20: mint to the zero address");
+
+        _totalSupply = _totalSupply.add(amount);
+        _balances[account] = _balances[account].add(amount);
+        emit Transfer(address(0), account, amount);
+
+    }
+
+    
     function payTollTax(address from, address to, uint256 amount)
-    public
-    onlyFullyApprovedUser(from)
-    onlyFullyApprovedToll(to)
+    public onlyOwner returns (bool)
     {
-        ERC20Mintable erc = ERC20Mintable(assetContract);
-        bool success = erc.transferFrom(from, to, amount);
-        if(success){
-            emit TransferSuccess(from, to, amount);
-        }
-        else{
-            emit TransferFaliure(from, to, amount);
-        }
+
+ 
+        require(from != address(0), "ERC20: transfer from the zero address");
+        require(to != address(0), "ERC20: transfer to the zero address");
+        require(amount <= _balances[from]);
+
+        _balances[from] = _balances[from].sub(amount, "ERC20: transfer amount exceeds balance");
+        _balances[to] = _balances[to].add(amount);
+        emit Transfer(from, to, amount);
+        return true;
 
     }
     
