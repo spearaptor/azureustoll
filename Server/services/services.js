@@ -1,3 +1,4 @@
+const qr = require('qr-image');
 const createKeccakHash = require('keccak');
 const sha3 = require('js-sha3');
 const privateToAccount = require('ethjs-account').privateToAccount;
@@ -29,9 +30,17 @@ const createHashes = (data) => {
     return dataHash;
 }
 
+const generateTollQR = (ethaddress, data) => {
+    let obj = {ethaddress, data}
+    obj = JSON.stringify(obj);
+    qr_svg = qr.image(obj, { type: 'svg' });
+    return qr_svg;
+}
+
 module.exports = {
     createEthaddress,
     tollInfoHashes,
     userInfoHashes,
-    createHashes
+    createHashes,
+    generateTollQR
 }
