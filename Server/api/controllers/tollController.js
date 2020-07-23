@@ -1,7 +1,7 @@
 const request = require('request');
 const axios = require('axios');
 const config = require('./../../config.js');
-const {createEthaddress, tollInfoHashes, userInfoHashes, createHashes} = require('./../../services/services');
+const {createEthaddress, tollInfoHashes, userInfoHashes, createHashes, generateTollQR} = require('./../../services/services');
 
 const tokenInstance = axios.create({
 	baseURL: config.apiPrefix + config.contractAddress,
@@ -52,6 +52,7 @@ exports.create_toll = function(req, res) {
     const tollEthaddress = createEthaddress(req.body.emailAddress);
     const tollEmailHash = createHashes(req.body.emailAddress);
     const tollInforHash = tollInfoHashes(req.body.documentId, req.body.tollPricing);
+    const qr = generateTollQR(tollEthaddress, req.body.tollPricing);
         tokenInstance.post('/addTollByEmail', {
             ethAddress: tollEthaddress,
             emailHash: tollEmailHash,
@@ -61,7 +62,8 @@ exports.create_toll = function(req, res) {
             const data = response.data;
             data["ethAddress"] = tollEthaddress;
             console.log("RESPONSE FROM API", data);
-            res.send(data);
+            res.type('svg');
+            qr.pipe(res);
         })
         .catch(function (error) {
             console.log("ERRROR STARTS HERE::\n",error.response.data);
@@ -177,4 +179,3 @@ exports.pay_toll = function(req, res) {
             res.send(error.response.data)
         })
     }
-
