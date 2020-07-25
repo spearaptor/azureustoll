@@ -13,7 +13,7 @@
 module.exports = {
     apiPrefix: 'https://beta-api.ethvigil.com/v0.1/contract/',
     apiKey: '3401c154-d126-4d3a-a27a-54ee7da33c09',
-    contractAddress: '0xaf16ec1cf012a9fd8d507ae683876afc5effa370',
+    contractAddress: '0xa7e0f8d7f219240da3011d0ecfbe0a7fb83232fb',
     //TransferBot: '0xd11430bbadc6f921da97dc6e9843a5a56868a144',
     auditContractAddress: '0xf2de5bf15565f3170225d6613a3e547f531f7207',
     erc20minContractAddress: '0x06e39284325c3c82f4d51b79ee585f5bfaaf85b4',
