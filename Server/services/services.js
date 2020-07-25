@@ -37,10 +37,25 @@ const generateTollQR = (ethaddress, data) => {
     return qr_svg;
 }
 
+const getPayableAmount = (carNum, tollPrice) => {
+    const carTypeCode = carNum[4]+carNum[5];
+    if(carTypeCode === "CR"){
+        return tollPrice.car;
+    }
+    else if(carTypeCode === "TR"){
+        return tollPrice.truck;
+    }
+    else if(carTypeCode === "BK"){
+        return tollPrice.bike;
+    }
+    return tollPrice.govt;
+}
+
 module.exports = {
     createEthaddress,
     tollInfoHashes,
     userInfoHashes,
     createHashes,
-    generateTollQR
+    generateTollQR,
+    getPayableAmount
 }
