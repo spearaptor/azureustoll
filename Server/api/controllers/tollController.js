@@ -1,7 +1,7 @@
 const request = require('request');
 const axios = require('axios');
 const config = require('./../../config.js');
-const {createEthaddress, tollInfoHashes, userInfoHashes, createHashes, generateTollQR} = require('./../../services/services');
+const {createEthaddress, tollInfoHashes, userInfoHashes, createHashes, generateTollQR, getPayableAmount} = require('./../../services/services');
 
 const tokenInstance = axios.create({
 	baseURL: config.apiPrefix + config.contractAddress,
@@ -161,7 +161,7 @@ exports.balanceOf = function(req, res) {
 exports.pay_toll = function(req, res) {
     const userEthaddress = createEthaddress(req.body.UseremailAddress);
     const tollEthaddress = createEthaddress(req.body.TollemailAddress);
-    const transferAmount = req.body.amount;
+    const transferAmount = getPayableAmount(req.body.UserCarNumber, req.body.TollPricing);
         tokenInstance.post('/payTollTax', {
             from: userEthaddress,
             to: tollEthaddress,
@@ -169,6 +169,7 @@ exports.pay_toll = function(req, res) {
         })
         .then(function (response) {
             const data = response.data;
+            data["AmountPayed"] = transferAmount;
             console.log("RESPONSE FROM API", data);
             res.send(data);
         })
