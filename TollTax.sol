@@ -165,6 +165,10 @@ contract TollTax is Ownable{
         emit UserStatusUpdated(ethAddress, UserStates.notApplied);
     }
     
+    function balanceOf(address account) public view returns (uint256) {
+        return _balances[account];
+    }
+    
     function mint(address account, uint256 amount) public onlyOwner {
         require(account != address(0), "ERC20: mint to the zero address");
 
