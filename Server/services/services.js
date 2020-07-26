@@ -1,3 +1,7 @@
+const qr = require('qr-image');
+// const fs = require('fs-extra');
+const fs = require('fs');
+const { parse } = require('json2csv');
 const createKeccakHash = require('keccak');
 const sha3 = require('js-sha3');
 const privateToAccount = require('ethjs-account').privateToAccount;
@@ -29,9 +33,67 @@ const createHashes = (data) => {
     return dataHash;
 }
 
+const generateTollQR = (ethaddress, data) => {
+    let obj = {ethaddress, data}
+    obj = JSON.stringify(obj);
+    qr_svg = qr.image(obj, { type: 'svg' });
+    return qr_svg;
+}
+
+const getPayableAmount = (carNum, tollPrice) => {
+    const carTypeCode = carNum[4]+carNum[5];
+    if(carTypeCode === "CR"){
+        return tollPrice.car;
+    }
+    else if(carTypeCode === "TR"){
+        return tollPrice.truck;
+    }
+    else if(carTypeCode === "BK"){
+        return tollPrice.bike;
+    }
+    return tollPrice.govt;
+}
+
+const createUpdateCSV = (fields, data, filename) => {
+    var newLine= "\r\n";
+    var opts = {fields};
+    // var toCsv = {
+    //     data: data,
+    //     fields: fields,
+    //     hasCSVColumnTitle: false
+    // };
+
+    fs.stat(`${filename}.csv`, function (err, stat) {
+        if (err == null) {
+            console.log('File exists');
+
+            //write the actual data and end with newline
+            var csv = parse(data, {header : false}) + newLine;
+
+            fs.appendFile(`${filename}.csv`, csv, function (err) {
+                if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            });
+        }
+        else {
+            //write the headers and newline
+            console.log('New file, just writing headers');
+            var csv = parse(data, opts) + newLine;
+
+            fs.writeFile(`${filename}.csv`, csv, function (err) {
+                if (err) throw err;
+                console.log('file saved');
+            });
+        }
+    });
+}
+
 module.exports = {
     createEthaddress,
     tollInfoHashes,
     userInfoHashes,
-    createHashes
+    createHashes,
+    generateTollQR,
+    getPayableAmount,
+    createUpdateCSV
 }
