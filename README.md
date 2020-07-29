@@ -1,2 +1,0 @@
-# cardinal
-HackFS Project Repository
