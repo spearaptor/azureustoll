@@ -18,7 +18,7 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 - Usage
 - [Backend Server](https://github.com/shubidiwoop/cardinal/tree/master/Backend%20Server)
 - Frontend App
-- Smart Contracts
+- [Smart Contracts](https://github.com/shubidiwoop/cardinal/tree/master/Smart%20Contracts)
 - [Credits](#credits)
 - [Support](#support)
 
