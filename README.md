@@ -33,12 +33,10 @@ Refer to instructions in each to run and develop them locally.
  For the registration process, access tokens will be verified via GoogleAuthO. Once the user is registered, users will be able to deposit FIAT money into the account. In the post-COVID19 world, contactless payments will be made via a QR code. The user will scan the code and the program will verify account balance by maintaining an ERC20 balance and transferring for each deduction, which provides automation and transparency.
 <div align="center"> <img src="https://imgur.com/8rVepfb.png" alt="user registration"></div>
 
-Storage and encryption is made possible using [Fleek](https://docs.fleek.co/), which is built on IPFS, Textile, and Filecoin. 
-
-
 ## Credits
 
-We have designed this full-stack dapps using the support provided by [EthVigil’s APIs](https://ethvigil.com/). We will keep you updated on the additional functionalities that will be added to the projects.
+We have designed this full-stack dapps using the support provided by [EthVigil’s APIs](https://ethvigil.com/). 
+Even more so, storage and encryption of user and toll data is made possible using [Fleek](https://docs.fleek.co/), which is built on IPFS, Textile, and Filecoin. We will keep you updated on the additional functionalities that will be added to the projects.
 
 ## Support 
 
