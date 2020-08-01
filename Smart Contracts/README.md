@@ -33,7 +33,7 @@ Use EthVigil to deploy the Solidity Smart Contract, `TollTax.sol`.
 
 After deploying, use the `API-KEY` provided in the backend server `config.js`
 
-# Maintainers
+## Maintainers
 These contracts are maintained by:
 * [Somya Didwania](https://github.com/somyadidwania)
 * [Shubham Sharma](https://github.com/shubidiwoop)
