@@ -9,11 +9,9 @@ HackFS Project Repository
 ## Overview 
 Cardinal team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
 
-> Our Application's apk
+> [Our Server](https://tollbotv4.herokuapp.com/)
 
-> [Our server](https://tollbotv4.herokuapp.com/)
-
-> Video Demo
+> [Video Demo]
 
 ## Respository Contents
 
