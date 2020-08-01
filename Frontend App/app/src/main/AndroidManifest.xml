@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.frontendtoll">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/bird"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/bird"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".CheckBalanceToll"
+            android:parentActivityName=".TollCheck"></activity>
+        <activity android:name=".TollInfo"
+            android:parentActivityName=".TollCheck"/>
+        <activity android:name=".GenerateQr"
+            android:parentActivityName=".TollCheck"/>
+        <activity android:name=".TollCheck" />
+        <activity android:name=".WebClass"
+            android:parentActivityName=".CheckBalance"/>
+        <activity android:name=".PaymentCheckSafe" />
+        <activity android:name=".AddMoney"
+            android:parentActivityName=".PaymentCheckSafe"/>
+        <activity android:name=".CheckBalance"
+            android:parentActivityName=".PaymentCheckSafe"/>
+        <activity android:name=".UserInfo"
+            android:parentActivityName=".PaymentCheckSafe"/>
+        <activity android:name=".Payment" />
+        <activity android:name=".QrCode"
+            android:parentActivityName=".PaymentCheckSafe"/>
+        <activity android:name=".TollActivity"
+            android:parentActivityName=".UserOrToll"/>
+        <activity android:name=".UserOrToll" />
+        <activity android:name=".LicenseActivity"
+            android:parentActivityName=".UserOrToll"/>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
