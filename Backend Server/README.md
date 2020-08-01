@@ -67,3 +67,7 @@ If you need to update `npm`, you can make it using `npm`! After running the foll
 
     $ npm start
 
+# Maintainers
+This server is maintained by:
+* [Shubham Sharma](https://github.com/shubidiwoop)
+* [Somya Didwania](https://github.com/somyadidwania)
