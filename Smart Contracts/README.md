@@ -3,6 +3,7 @@ HackFS Project Repository
 
 Cardinal team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
 
+---
 ## Prerequisites 
 The steps below will help you fill in the right details in the settings file. 
 
@@ -31,3 +32,8 @@ Use EthVigil to deploy the Solidity Smart Contract, `TollTax.sol`.
 * [Deploy contract from CLI](https://ethvigil.com/docs/cli_onboarding/#deploy-a-solidity-smart-contract)
 
 After deploying, use the `API-KEY` provided in the backend server `config.js`
+
+# Maintainers
+These contracts are maintained by:
+* [Somya Didwania](https://github.com/somyadidwania)
+* [Shubham Sharma](https://github.com/shubidiwoop)
