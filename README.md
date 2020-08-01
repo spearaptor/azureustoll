@@ -9,15 +9,17 @@ HackFS Project Repository
 ## Overview 
 Cardinal team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
 
-> Our website
+> Our Application's apk
+
+> [Our server](https://tollbotv4.herokuapp.com/)
 
 > Video Demo
 
 ## Respository Contents
 
-- Usage
+- [Usage](#usage)
 - [Backend Server](https://github.com/shubidiwoop/cardinal/tree/master/Backend%20Server)
-- Frontend App
+- [Frontend App](https://github.com/shubidiwoop/cardinal/tree/master/Frontend%20App)
 - [Smart Contracts](https://github.com/shubidiwoop/cardinal/tree/master/Smart%20Contracts)
 - [Credits](#credits)
 - [Support](#support)
