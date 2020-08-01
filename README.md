@@ -45,6 +45,10 @@ We have designed this full-stack dapps using the support provided by [EthVigilâ€
 ## Support 
 
 Reach out to us at one of the following places!
+* [Shubham Sharma](https://github.com/shubidiwoop)
+* [Somya Didwania](https://github.com/somyadidwania)
+* [Roshan Kumar Choudhary](https://github.com/RoshanKumarChoudhary)
+
 
 
 
