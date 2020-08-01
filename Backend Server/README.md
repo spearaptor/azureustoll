@@ -52,7 +52,7 @@ If you need to update `npm`, you can make it using `npm`! After running the foll
 
 ## Configure app
   
-- Open `config.js` then edit it with your API KEY. Refer smart-contracts documentation to extract this.
+- Open `config.js` then edit it with your API KEY. Refer [smart-contracts](https://github.com/shubidiwoop/cardinal/tree/master/Smart%20Contracts) documentation to extract this.
 
     ```shell
     apiKey: process.env.ETHAPIKEY
@@ -67,7 +67,7 @@ If you need to update `npm`, you can make it using `npm`! After running the foll
 
     $ npm start
 
-# Maintainers
+## Maintainers
 This server is maintained by:
 * [Shubham Sharma](https://github.com/shubidiwoop)
 * [Somya Didwania](https://github.com/somyadidwania)
