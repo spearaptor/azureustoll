@@ -9,6 +9,17 @@ Clone this repository and import into Android Studio
 
 ```git clone github.com/shubidiwoop/cardinal.git```
 
+# Configuration
+1. Open [Google Cloud Platform](https://developers.google.com/identity/sign-in/android/start-integrating)
+2. Login to your google account
+3. Select `Configure a project`
+4. Enter a project name (Ex. Frontend Toll) and accept the terms and conditions
+5. Enter a product name (Ex. Toll Service)
+6. Calling from: Android
+7. Package name: name of your java package. SHA1 signing certificate: Google account's SHA1. Refer the [steps given](https://developers.google.com/drive/android/auth)
+8. Download the credentials.json file 
+
+On generating the `credentials.json` file, paste this file in `Frontend App/app`
 
 # Running the application
 Download the apk file on your phone. 
