@@ -40,10 +40,12 @@ Even more so, storage and encryption of user and toll data is made possible usin
 
 ## Support 
 
-Reach out to us at one of the following places!
-* [Shubham Sharma](https://github.com/shubidiwoop)
-* [Somya Didwania](https://github.com/somyadidwania)
+Reach out to one of us regarding any queries!
 * [Roshan Kumar Choudhary](https://github.com/RoshanKumarChoudhary)
+* [Somya Didwania](https://github.com/somyadidwania)
+* [Shubham Sharma](https://github.com/shubidiwoop)
+
+
 
 
 
