@@ -17,6 +17,8 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 
 > [Presentation for Demo](https://www.slideshare.net/secret/5xHXJY2dLcnv7l)
 
+> [HackFS Submission](hack.ethglobal.co/showcase/cardinal-recTkk0jGPXRrwg6Z)
+
 ## Respository Contents
 
 - [Usage](#usage)
@@ -45,7 +47,7 @@ Even more so, storage and encryption of user and toll data is made possible usin
 
 ## Support 
 
-Reach out to us at one of the following places!
+Reach out to one of us regarding any queries or support!
 * [Roshan Kumar Choudhary](https://github.com/RoshanKumarChoudhary)
 * [Somya Didwania](https://github.com/somyadidwania)
 * [Shubham Sharma](https://github.com/shubidiwoop)
