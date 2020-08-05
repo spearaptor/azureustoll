@@ -1,0 +1,31 @@
+{
+  "name": "endpoint",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fleekhq/space-client": "^0.1.5",
+    "axios": "^0.19.2",
+    "ethjs-account": "^0.1.4",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "fs-extra": "^9.0.1",
+    "js-sha3": "^0.8.0",
+    "json2csv": "^5.0.1",
+    "keccak": "^3.0.0",
+    "os": "^0.1.1",
+    "qr-image": "^3.2.0",
+    "request": "^2.88.2",
+    "temp-dir": "^2.0.0",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
