@@ -11,7 +11,11 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 
 > [Our Server](https://tollbotv4.herokuapp.com/)
 
-> [Video Demo]
+> [Video Demo](https://youtu.be/WrkGegUPHh4)
+
+> [Fleek Storage Bucket](https://shubidiwoop-team-bucket.storage.fleek.co/)
+
+> [Presentation for Demo](https://www.slideshare.net/secret/5xHXJY2dLcnv7l)
 
 ## Respository Contents
 
@@ -19,6 +23,7 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 - [Backend Server](https://github.com/shubidiwoop/cardinal/tree/master/Backend%20Server)
 - [Frontend App](https://github.com/shubidiwoop/cardinal/tree/master/Frontend%20App)
 - [Smart Contracts](https://github.com/shubidiwoop/cardinal/tree/master/Smart%20Contracts)
+- [Space-Daemon](https://github.com/shubidiwoop/cardinal/tree/master/Space-Daemon)
 - [Credits](#credits)
 - [Support](#support)
 
@@ -36,14 +41,16 @@ Refer to instructions in each to run and develop them locally.
 ## Credits
 
 We have designed this full-stack dapps using the support provided by [EthVigil’s APIs](https://ethvigil.com/). 
-Even more so, storage and encryption of user and toll data is made possible using [Fleek](https://docs.fleek.co/), which is built on IPFS, Textile, and Filecoin. We will keep you updated on the additional functionalities that will be added to the projects.
+Even more so, storage and encryption of user and toll data is made possible using [Fleek](https://docs.fleek.co/) and [Space-Daemon](https://github.com/FleekHQ/space-daemon), which is built on IPFS, Textile, and Filecoin. We will keep you updated on the additional functionalities that will be added to the projects.
 
 ## Support 
 
 Reach out to us at one of the following places!
-* [Shubham Sharma](https://github.com/shubidiwoop)
-* [Somya Didwania](https://github.com/somyadidwania)
 * [Roshan Kumar Choudhary](https://github.com/RoshanKumarChoudhary)
+* [Somya Didwania](https://github.com/somyadidwania)
+* [Shubham Sharma](https://github.com/shubidiwoop)
+
+
 
 
 
