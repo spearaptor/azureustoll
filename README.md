@@ -11,7 +11,7 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 
 > [Our Server](https://tollbotv4.herokuapp.com/)
 
-> [Video Demo](https://youtu.be/WrkGegUPHh4)
+> [Video Demo](https://youtu.be/57B67BZ_URI)
 
 > [Fleek Storage Bucket](https://shubidiwoop-team-bucket.storage.fleek.co/)
 
