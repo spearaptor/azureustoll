@@ -17,7 +17,7 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 
 > [Presentation for Demo](https://www.slideshare.net/secret/5xHXJY2dLcnv7l)
 
-> [HackFS Submission](hack.ethglobal.co/showcase/cardinal-recTkk0jGPXRrwg6Z)
+> [HackFS Submission](http://hack.ethglobal.co/showcase/cardinal-recTkk0jGPXRrwg6Z)
 
 ## Respository Contents
 
