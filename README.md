@@ -1,13 +1,8 @@
-<div align="center"> <img src="https://imgur.com/4cIXYg0.png" title="cardinallogo" alt="cardinallogo"></div>
-
-# Cardinal
+# Azureus
 HackFS Project Repository
 
-*adjective: cardinal*
-
-*of the greatest importance; fundamental*
 ## Overview 
-Cardinal team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
+Azureus team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
 
 > [Our Server](https://tollbotv4.herokuapp.com/)
 
@@ -17,16 +12,16 @@ Cardinal team has identified the lack of a frictionless transaction process at t
 
 > [Presentation for Demo](https://www.slideshare.net/secret/5xHXJY2dLcnv7l)
 
-> [HackFS Submission](http://hack.ethglobal.co/showcase/cardinal-recTkk0jGPXRrwg6Z)
+> [HackFS Submission](http://hack.ethglobal.co/showcase/azureus-recTkk0jGPXRrwg6Z)
 
 ## Respository Contents
 
 - [Usage](#usage)
 - [Composition](#composition)
-- [Backend Server](https://github.com/shubidiwoop/cardinal/tree/master/Backend%20Server)
-- [Frontend App](https://github.com/shubidiwoop/cardinal/tree/master/Frontend%20App)
-- [Smart Contracts](https://github.com/shubidiwoop/cardinal/tree/master/Smart%20Contracts)
-- [Space-Daemon](https://github.com/shubidiwoop/cardinal/tree/master/Space-Daemon)
+- [Backend Server](https://github.com/shubidiwoop/azureus/tree/master/Backend%20Server)
+- [Frontend App](https://github.com/shubidiwoop/azureus/tree/master/Frontend%20App)
+- [Smart Contracts](https://github.com/shubidiwoop/azureus/tree/master/Smart%20Contracts)
+- [Space-Daemon](https://github.com/shubidiwoop/azureus/tree/master/Space-Daemon)
 - [Credits](#credits)
 - [Support](#support)
 
