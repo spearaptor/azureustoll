@@ -5,12 +5,12 @@ const { SpaceClient } = require('@fleekhq/space-client');
 
 const client = new SpaceClient({
     url: 'http://0.0.0.0:9998',
-    defaultBucket: 'cardinalBucketTest_5',
+    defaultBucket: 'sampleBucketTest_5',
 });
 
 
 client
-    .createBucket({ slug: 'cardinalBucketTest_5'})
+    .createBucket({ slug: 'sampleBucketTest_5'})
     //or user bucket
     .then((res) => {
       const bucket = res.getBucket();
