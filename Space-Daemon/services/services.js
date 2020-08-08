@@ -16,7 +16,7 @@ const { SpaceClient } = require('@fleekhq/space-client');
 // default port exposed by the daemon for client connection is 9998
 const client = new SpaceClient({
     url: 'http://0.0.0.0:9998',
-    defaultBucket: 'cardinalBucketTest_5',
+    defaultBucket: 'sampleBucketTest_5',
 });
 
 const createEthaddress = (email) => {
@@ -169,7 +169,6 @@ const removeRowInCSV = async (ethaddress, fileName) => {
 }
 
 const openFile = async (fileName) => {
-    // const bucket = 'cardinalBucketTest_3';
     const dirRes = await client.listDirectories({
         // bucket,
     });
@@ -206,7 +205,6 @@ const openFile = async (fileName) => {
 
 const uploadFile = (location) => {
     const stream = client.addItems({
-        // bucket: 'cardinalBucketTest_3',
         targetPath: '/', // path in the bucket to be saved
         sourcePaths: [location]      //[`‪D:/Endpoint/${fileName}.csv`]
     });
