@@ -1,7 +1,7 @@
-# Cardinal 
+# Azureus 
 HackFS Project Repository
 
-Cardinal team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
+Azureus team has identified the lack of a frictionless transaction process at toll gates and is designing a decentralized solution that allows a toll authority to conduct secure transactions by cutting out untrustworthy middlemen and on-chain verification.
 
 ---
 ## Requirements
@@ -48,13 +48,13 @@ If you need to update `npm`, you can make it using `npm`! After running the foll
 
 ## Install
 
-    $ git clone https://github.com/shubidiwoop/cardinal
+    $ git clone https://github.com/shubidiwoop/azureus
     $ cd Space-Daemon
     $ npm install
 
 ## Configure app
   
-- Open `config.js` then edit it with your API KEY. Refer [smart-contracts](https://github.com/shubidiwoop/cardinal/tree/master/Smart%20Contracts) documentation to extract this.
+- Open `config.js` then edit it with your API KEY. Refer [smart-contracts](https://github.com/shubidiwoop/azureus/tree/master/Smart%20Contracts) documentation to extract this.
 
     ```shell
     apiKey: process.env.ETHAPIKEY
