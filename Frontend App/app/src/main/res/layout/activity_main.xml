@@ -12,7 +12,7 @@
         android:layout_width="376dp"
         android:layout_height="52dp"
         android:layout_marginTop="44dp"
-        android:text="Welcome To Cardinal Toll Service"
+        android:text="Welcome To Azureus Toll Service"
         android:textAlignment="center"
         android:textColor="#db4a39"
         android:textSize="24sp"
