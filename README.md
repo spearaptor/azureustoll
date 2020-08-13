@@ -6,11 +6,7 @@ Azureus team has identified the lack of a frictionless transaction process at to
 
 > [Our Server](https://tollbotv4.herokuapp.com/)
 
-> [Video Demo](https://youtu.be/57B67BZ_URI)
-
 > [Fleek Storage Bucket](https://shubidiwoop-team-bucket.storage.fleek.co/)
-
-> [Presentation for Demo](https://www.slideshare.net/secret/5xHXJY2dLcnv7l)
 
 > [HackFS Submission](http://hack.ethglobal.co/showcase/azureus-recTkk0jGPXRrwg6Z)
 
