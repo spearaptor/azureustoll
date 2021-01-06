@@ -12,7 +12,7 @@
   "dependencies": {
     "@fleekhq/fleek-storage-js": "^1.0.2",
     "@fleekhq/space-client": "^0.1.5",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "ethjs-account": "^0.1.4",
     "express": "^4.17.1",
